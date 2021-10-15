@@ -1,0 +1,48 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text":"General presentation based on Bettereducation score map (2019)","fontSize":13,"align": "center"},
+  "width": 270,
+  "height": 270,
+  "data": {
+    "url": "https://raw.githubusercontent.com/Charliechzzz/Chart/main/medianchart.csv"
+  },
+  "selection":{
+     "NAME_highlight": {
+        "type": "multi",
+        "fields": ["NAME"],
+        "bind": "legend"
+      }
+  },
+  "mark": "point",
+  "encoding": {
+    "x": {
+      "field": "MEDIAN",
+      "type": "quantitative",
+      "title":"Median Bettereducation Score",
+      "scale": {"zero": false}
+    },
+    "y": {
+      "field": "RATE",
+      "type": "quantitative",
+      "title":"Ratio of Bettereducation Score > 90",
+      "scale": {"zero": false}
+    },
+    "color": {"field": "NAME", "type": "nominal","title":"Location and Type"},
+    "shape": {"field": "NAME", "type": "nominal","title":"Location and Type"},
+    "opacity": {
+        "condition": {"selection": "NAME_highlight", "value": 0.6},
+        "value": 0.2
+      },
+    "tooltip":[
+        {
+          "field":"NAME", "type": "nominal", "title":"Location and Type"
+      },
+    {
+      "field":"MEDIAN", "type": "quantitative", "title":"Median Bettereducation Score"
+    },
+    {
+      "field":"RATE", "type": "quantitative","format":".4f", "title":"Percentage of Bettereducation Score > 90"
+    }
+    ]
+}
+}

@@ -1,0 +1,103 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 400,
+  "height": 280,
+  "title": {"text":"Bettereducation score map in Western Australia and New South Wales (2019)","fontSize":13},
+  "projection": {
+    "type": "mercator"
+ },
+  "params": [
+    
+    {
+      "name": "Type",
+    "bind": {
+      "input": "select",
+      "options": [
+        null,
+        "Primary",
+        "Secondary"
+      ],
+      "labels":[
+        "Show All",
+        "Primary",
+        "Secondary"
+      ],
+      "name": "School Type : "
+    }
+    },
+    {"name": "Location",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "Western Australia",
+          "New South Wales"
+        ],
+        "labels":[
+          "Show All",
+          "Western Australia",
+          "New South Wales"
+        ],
+        "name": "Location : "
+      }
+      },
+      {"name": "BE_Score",
+      "value":0,
+    "bind": {
+      "input": "range",
+      "min":0,
+      "max":100,
+      "step": 1,
+      "name": "Bettereducation score: "
+    
+    }
+      }
+  ],
+
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/Charliechzzz/FIT3179/main/ausmap.topo.json",
+        "format": {
+          "type": "topojson",
+          "feature": "ausmap"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "lightgray",
+        "stroke": "white",
+        "strokeWidth":1
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/Charliechzzz/FIT3179/main/mapsheet.csv"
+      },
+      "transform":[
+      {"filter":"Type == null || datum.Type == Type"},
+      {"filter":"Location == null || datum.Location == Location"},
+      {"filter":"datum.Score > BE_Score"}
+    ],
+      "mark": "circle",
+      "encoding": {
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
+        },
+        "size": {"value": 15},
+        "color": {"field": "Score","type": "quantitative","scale":{"scheme":"blues"}},
+        "tooltip":[
+          {
+            "field":"School Name", "type": "nominal", "title":"School Name"
+        },
+      {
+        "field":"Score", "type": "quantitative", "title":"Better Education Score"
+      }]
+      }
+    }
+  ]
+}
