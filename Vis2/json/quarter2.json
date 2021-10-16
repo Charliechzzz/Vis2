@@ -1,0 +1,30 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title":{"text":"SEA quarter of New South Wales secondary schools (2019)","fontSize":12},
+    "data": {
+      "values": [{"Rank": "Bottom", "data": "29.4"},
+          {"Rank": "Lower Middle", "data": "24.1"},
+          {"Rank": "Upper Middle", "data": "23.2"},
+          {"Rank": "Top", "data": "23.3"}]
+    },
+    "layer": [{
+      "mark": {"type": "arc", "innerRadius": 20, "stroke": "#fff"}
+    },{
+      "mark": {"type": "text", "radiusOffset": 10},
+      "encoding": {
+        "text": {"field": "data", "type": "quantitative"}
+      }
+    }],
+    "encoding": {
+      "theta": {"field": "data", "type": "quantitative", "stack": true},
+      "radius": {"field": "data", "scale": {"type": "sqrt", "zero": true, "rangeMin": 20}},
+      "color": {"field": "Rank", "type": "nominal","scale":{"domain":["Top","Upper Middle","Lower Middle","Bottom"],"range":["#2171b5","#6baed6","#bdd7e7","#eff3ff"]}},
+          "tooltip":[
+            {
+              "field":"Rank", "type": "nominal", "title":"Rank"
+          },
+        {
+          "field":"data", "type": "quantitative", "title":"Ratio of Socio-Educational Advantage quarter"
+        }]
+    }
+  }

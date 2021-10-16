@@ -1,8 +1,8 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": {"text":"Top 500 univerisities in the world ranking with Quacquarelli Symonds (QS) on 2019","fontSize":12},
-    "width":400,
-    "height":200,
+    "title": {"text":"Number of QS Top 500 world univerisities in New South Wales and Western Australia (2019)","fontSize":12},
+    "width":440,
+    "height":130,
     "data": {
       "values": [
         {"Location": "New South Wales", "Number of universities with Quacquarelli Symonds Rankings":6},
@@ -11,7 +11,7 @@
     },
     "encoding": {
       "y": {"field": "Location", "type": "nominal"},
-      "x": {"field": "Number of universities with Quacquarelli Symonds Rankings", "type": "quantitative", "scale": {"domain": [0, 8]}}
+      "x": {"field": "Number of universities with Quacquarelli Symonds Rankings", "type": "quantitative", "scale": {"domain": [0,8]}}
     },
     "layer": [{
       "mark": "bar"

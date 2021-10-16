@@ -1,11 +1,9 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": 400,
+    "width": 360,
     "height": 280,
-    "title": {"text":"Index of Community Socio-Educational Advantage score in Western Australia and New South Wales (2019)","fontSize":10},
-    "projection": {
-      "type": "mercator"
-   },
+    "title": {"text":"ICSEA score map in Western Australia and New South Wales (2019)","fontSize":12},
+
     "params": [
       
       {
@@ -25,35 +23,31 @@
         "name": "School Type : "
       }
       },
-      {"name": "Location",
-        "bind": {
-          "input": "select",
-          "options": [
-            null,
-            "Western Australia",
-            "New South Wales"
-          ],
-          "labels":[
-            "Show All",
-            "Western Australia",
-            "New South Wales"
-          ],
-          "name": "Location : "
-        }
-        },
+      {
+        "name": "center_to",
+        "value":[133.8,-25.3],
+        "bind":{"input": "select","options":[[133.8,-25.3],[121.6,-27.7],[146.9,-31.3]],"labels": ["Australia", "Western Australia","New South Wales"],"name": "Map Center: "}
+      },
+      {
+        "name": "zoom_level",
+        "value":450,
+        "bind":{"input": "range","min":300,"max": 1000,"step":50,"name": "Zoom:"}
+      },
         {"name": "Score",
-        "value":0,
+        "value":500,
       "bind": {
         "input": "range",
         "min":500,
         "max":1300,
         "step": 10,
-        "name": "Index of Community Socio-Educational Advantage score: "
+        "name": "Index of Community Socio-Educational Advantage score > "
       
       }
         }
     ],
-  
+    "projection": {
+        "type": "mercator","center":{"expr":"center_to"},"scale":{"expr":"zoom_level"}
+     },
     "layer": [
       {
         "data": {
@@ -75,10 +69,9 @@
         },
         "transform":[
         {"filter":"Type == null || datum.Type == Type"},
-        {"filter":"Location == null || datum.Location == Location"},
         {"filter":"datum.Score > Score"}
       ],
-        "mark": "square",
+        "mark": "circle",
         "encoding": {
           "longitude": {
             "field": "Longitude",
@@ -88,8 +81,8 @@
             "field": "Latitude",
             "type": "quantitative"
           },
-          "size": {"value": 15},
-          "color": {"field": "Score","type": "quantitative","scale":{"scheme":"greens"}},
+          "color": {"field": "Location","type": "nominal"},
+          "size":{"field":"Score","type":"quantitative","scale":{"type":"threshold","domain":[500,700,900,1100,1300],"range":[5,8,12,15,20,26]}},
           "tooltip":[
             {
               "field":"School Name", "type": "nominal", "title":"School Name"

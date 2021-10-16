@@ -1,14 +1,14 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 400,
+  "width": 390,
   "height": 280,
-  "title": {"text":"Bettereducation score map in Western Australia and New South Wales (2019)","fontSize":13},
-  "projection": {
-    "type": "mercator"
- },
+  "title": {"text":"Bettereducation score map in Western Australia and New South Wales (2019)","fontSize":12},
+
   "params": [
     
-    {
+          
+      
+      {
       "name": "Type",
     "bind": {
       "input": "select",
@@ -22,37 +22,34 @@
         "Primary",
         "Secondary"
       ],
-      "name": "School Type : "
+      "name": "School Type: "
     }
     },
-    {"name": "Location",
-      "bind": {
-        "input": "select",
-        "options": [
-          null,
-          "Western Australia",
-          "New South Wales"
-        ],
-        "labels":[
-          "Show All",
-          "Western Australia",
-          "New South Wales"
-        ],
-        "name": "Location : "
-      }
-      },
+    {
+      "name": "center_to",
+      "value":[133.8,-25.3],
+      "bind":{"input": "select","options":[[133.8,-25.3],[121.6,-27.7],[146.9,-31.3]],"labels": ["Australia", "Western Australia","New South Wales"],"name": "Map Center: "}
+    },
+    {
+      "name": "zoom_level",
+      "value":450,
+      "bind":{"input": "range","min":300,"max": 1000,"step":50,"name": "Zoom:"}
+    },
       {"name": "BE_Score",
-      "value":0,
+      "value":60,
     "bind": {
       "input": "range",
-      "min":0,
+      "min":60,
       "max":100,
       "step": 1,
-      "name": "Bettereducation score: "
+      "name": "Bettereducation score > "
     
     }
       }
   ],
+  "projection": {
+    "type": "mercator","center":{"expr":"center_to"},"scale":{"expr":"zoom_level"}
+ },
 
   "layer": [
     {
@@ -75,7 +72,6 @@
       },
       "transform":[
       {"filter":"Type == null || datum.Type == Type"},
-      {"filter":"Location == null || datum.Location == Location"},
       {"filter":"datum.Score > BE_Score"}
     ],
       "mark": "circle",
@@ -88,8 +84,8 @@
           "field": "Latitude",
           "type": "quantitative"
         },
-        "size": {"value": 15},
-        "color": {"field": "Score","type": "quantitative","scale":{"scheme":"blues"}},
+        "color": {"field": "Location","type": "nominal"},
+        "size":{"field":"Score","type":"quantitative","scale":{"type":"threshold","domain":[60,70,80,90,100],"range":[5,8,12,15,20,26]}}, 
         "tooltip":[
           {
             "field":"School Name", "type": "nominal", "title":"School Name"

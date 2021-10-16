@@ -1,15 +1,20 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {"text":"General presentation based on Bettereducation score map (2019)","fontSize":13,"align": "center"},
-  "width": 270,
-  "height": 270,
+  "title": {"text":"Median Bettereducation score and ratio of schools Bettereducation score > 90 (2019)","fontSize":12,"align": "center"},
+  "width": 250,
+  "height": 230,
   "data": {
-    "url": "https://raw.githubusercontent.com/Charliechzzz/Chart/main/medianchart.csv"
+    "url": "https://raw.githubusercontent.com/Charliechzzz/Chart/main/data/medianchart.csv"
   },
   "selection":{
-     "NAME_highlight": {
+     "LOCATION_highlight": {
         "type": "multi",
-        "fields": ["NAME"],
+        "fields": ["LOCATION"],
+        "bind": "legend"
+      },
+      "TYPE_highlight": {
+        "type": "multi",
+        "fields": ["TYPE"],
         "bind": "legend"
       }
   },
@@ -18,30 +23,36 @@
     "x": {
       "field": "MEDIAN",
       "type": "quantitative",
-      "title":"Median Bettereducation Score",
+      "title":"Median Bettereducation score",
       "scale": {"zero": false}
     },
     "y": {
       "field": "RATE",
       "type": "quantitative",
-      "title":"Ratio of Bettereducation Score > 90",
+      "title":"Ratio of schools Bettereducation score > 90",
       "scale": {"zero": false}
     },
-    "color": {"field": "NAME", "type": "nominal","title":"Location and Type"},
-    "shape": {"field": "NAME", "type": "nominal","title":"Location and Type"},
+    "color": {"field": "LOCATION", "type": "nominal","title":"Location"},
+    "shape": {"field": "TYPE", "type": "nominal","title":"Type"},
+    "size":{"value":80},
     "opacity": {
-        "condition": {"selection": "NAME_highlight", "value": 0.6},
-        "value": 0.2
-      },
+        "condition": {"selection": "TYPE_highlight", "value": 0.6},
+        "value": 0.2},
+    
+
+        
     "tooltip":[
         {
-          "field":"NAME", "type": "nominal", "title":"Location and Type"
+          "field":"LOCATION", "type": "nominal", "title":"Location"
       },
-    {
-      "field":"MEDIAN", "type": "quantitative", "title":"Median Bettereducation Score"
+      {
+        "field":"TYPE", "type": "nominal", "title":"Type"
     },
     {
-      "field":"RATE", "type": "quantitative","format":".4f", "title":"Percentage of Bettereducation Score > 90"
+      "field":"MEDIAN", "type": "quantitative", "title":"Median Bettereducation score"
+    },
+    {
+      "field":"RATE", "type": "quantitative","format":".4f", "title":"Ratio of schools Bettereducation score > 90"
     }
     ]
 }
