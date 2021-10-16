@@ -14,8 +14,12 @@
       "x": {"field": "Number of universities with Quacquarelli Symonds Rankings", "type": "quantitative", "scale": {"domain": [0,8]}}
     },
     "layer": [{
-      "mark": "bar"
-    }, {
+      "mark": {"type":"bar"},
+      "encoding":{
+      "color":{"field": "Location", "type": "nominal"}}
+    }, 
+    
+    {
       "mark": {
         "type": "text",
         "align": "left",
